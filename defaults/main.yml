@@ -1,0 +1,13 @@
+---
+# Default instance variables. Should be overwritten. Task will need all
+# variables defined in here.
+ami_image: ami-5b04be28
+region: eu-west-1
+instance: instance
+keypair: acca-aws-default
+subnet: subnet_id
+security_group: secgroup
+instance_name: name
+instance_role: role
+instance_owner: owner
+instance_stack: stack

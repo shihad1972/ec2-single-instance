@@ -1,0 +1,36 @@
+---
+
+- assert:
+    that:
+    - "instance_name != 'name'"
+    msg: "instance_name must be set!"
+
+- debug: var=region
+
+- debug: var=instance
+
+- name: Provision ec2 instance
+  ec2:
+    image: "{{ ami_image }}"
+    region: "{{ region }}"
+    instance_type: "{{ instance }}"
+    key_name: "{{ keypair }}"
+    vpc_subnet_id: "{{ subnet_ids }}"
+    group_id: "{{ security_group_ids }}"
+    assign_public_ip: no
+    wait: true
+    instance_tags: "{{ instance_tags }}"
+    exact_count: 1
+    count_tag:
+      Name: "{{ instance_name }}"
+  register: ec2
+
+- debug: var=ec2
+
+- name: Set new IP in fact
+  set_fact:
+    private_ip={{ ec2.tagged_instances[0].private_ip }}
+
+- name: Set DNS destination in fact
+  set_fact:
+    dns_destination={{ private_ip }}
