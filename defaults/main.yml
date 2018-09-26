@@ -11,3 +11,4 @@ instance_name: name
 instance_role: role
 instance_owner: owner
 instance_stack: stack
+user_data: "{{ role_path }}/templates/default.sh.j2"
